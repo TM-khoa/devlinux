@@ -84,9 +84,6 @@ CLOSE_FILE:
         perror("Error: Cannot close file\n");
         exit(2);
     }
-    else {
-        printf("Close file successfully, exit code: %d\n", status);
-    }
     exit(status);
 }
 

@@ -5,7 +5,7 @@
 #include <sys/wait.h>
 #include <string.h>
 
-
+extern char **environ;
 
 int main()
 {
@@ -31,8 +31,8 @@ Enter Student ID ('quit' to exit)\n\
             printf("[MANAGER] Exiting. Goodbye!");
             break;
         }
-        pid_t pid = fork();
         fflush(stdout);
+        pid_t pid = fork();
         if(pid < 0){
             perror("fork fail");
             exit(1);
@@ -40,8 +40,9 @@ Enter Student ID ('quit' to exit)\n\
         if (pid == 0) {
             const char *binaryPath = "./searcher";
             char *const args[] = {"./searcher", student_id, "students.txt", NULL};
-            execve(binaryPath, args, NULL);
-            exit(0);
+            execve(binaryPath, args, environ);
+            perror("execve failed");
+            exit(2);
         }
         else {
             printf("[MANAGER] fork() → child PID:%d\n", pid);
