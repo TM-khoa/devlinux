@@ -30,13 +30,13 @@ char *get_grade(float gpa);
 Student parse_student(char *strdata);
 
 char search_result_buf [] =
-"========== SEARCH RESULT ==========    \n\
-  ID      : %s                          \n\
-  Name    : %s                          \n\
-  Class   : %s                          \n\
-  GPA     : %.2f                        \n\
-  Grade   : %s                          \n\
-====================================    \n\
+"========== SEARCH RESULT ==========\n\
+  ID      : %s                      \n\
+  Name    : %s                      \n\
+  Class   : %s                      \n\
+  GPA     : %.2f                    \n\
+  Grade   : %s                      \n\
+====================================\n\
 ";
 
 void search_result(Student student)
@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
             }
         }
     }
-    else {
+    else if(argc < 2){
         perror("Error: Argument error\n");
         exit(2);
 

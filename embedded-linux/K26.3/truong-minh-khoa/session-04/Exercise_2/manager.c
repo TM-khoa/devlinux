@@ -31,7 +31,6 @@ Enter Student ID ('quit' to exit)\n\
             printf("[MANAGER] Exiting. Goodbye!");
             break;
         }
-        fflush(stdin);
         fflush(stdout);
         pid = fork();
         if(pid < 0){
@@ -55,8 +54,7 @@ Enter Student ID ('quit' to exit)\n\
             if (WIFEXITED(status)) {
                 printf("[MANAGER] Child (PID %d) exited. code=%d → %s\n", cpid, WEXITSTATUS(status), WEXITSTATUS(status) == 0 ? "Found" : "Not found");
             } else if (WIFSIGNALED(status)) {
-                printf("[MANAGER] waitpid(%d) exit code=%d → FAILED\n", 
-                        cpid, WTERMSIG(status));
+                printf("[MANAGER] waitpid(%d) exit code=%d → FAILED\n", cpid, WEXITSTATUS(status));
             }
         }
     }

@@ -75,7 +75,8 @@ int main()
     for(int i = 0; i < FORK_NUM; i++) {
         int status;
         if (child_pids[i] <= 0) {
-            continue;
+            perror("fork fail");
+            exit(1);  // Stop ngay, không tiếp tục
         }
 
         if (waitpid(child_pids[i], &status, 0) < 0) {
@@ -87,15 +88,15 @@ int main()
         if (WIFEXITED(status) && WEXITSTATUS(status) == 0) {
             total_revenue += orders[i].quantity * orders[i].unit_price;;
             order_success++;
-            printf("[MANAGER] waitpid(%d) — order %d#: exit code=%d → SUCCESS\n",
+            printf("[MANAGER] waitpid(%d) — order #%d: exit code=%d → SUCCESS\n",
                     child_pids[i], orders[i].id, WEXITSTATUS(status));
         } else if (WIFEXITED(status)) {
-            printf("[MANAGER] waitpid(%d) — order %d#: exit code=%d → FAILED\n", 
+            printf("[MANAGER] waitpid(%d) — order #%d: exit code=%d → FAILED\n", 
                     child_pids[i], orders[i].id, WEXITSTATUS(status));
             order_fail++;
         }
         else {
-            printf("[MANAGER] waitpid(%d) — order %d#:child did not exit normally\n", 
+            printf("[MANAGER] waitpid(%d) — order #%d:child did not exit normally\n", 
                     child_pids[i], orders[i].id);
             order_fail++;
         }
