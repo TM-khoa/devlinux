@@ -46,7 +46,6 @@ void search_result(Student student)
 
 int main(int argc, char *argv[])
 {
-    int status = 0;
     FILE *f;
     printf("[SEARCHER] PID: %d | PPID: %d\n", getpid(), getppid());
     printf("[SEARCHER] Searching for \"%s\" in %s...\n", argv[1], argv[2]);
@@ -63,14 +62,20 @@ int main(int argc, char *argv[])
             if(readline != NULL) {
                 if(strstr(readline, student_id)) {
                     search_result(parse_student(readline));
-                    status = 0;
-                    goto CLOSE_FILE;
+                    if(fclose(f) == -1) {
+                        perror("Error: Cannot close file\n");
+                        exit(2);
+                    }
+                    exit(0);
                 }
             }
             else {
                 printf("No student found with ID: %s\n", student_id);
-                status = 1;
-                goto CLOSE_FILE;
+                if(fclose(f) == -1) {
+                    perror("Error: Cannot close file\n");
+                    exit(2);
+                }
+                exit(1);
             }
         }
     }
@@ -79,12 +84,7 @@ int main(int argc, char *argv[])
         exit(2);
 
     }
-CLOSE_FILE:
-    if(fclose(f) == -1) {
-        perror("Error: Cannot close file\n");
-        exit(2);
-    }
-    exit(status);
+    exit(0);
 }
 
 void parse_string(void *param_out, size_t param_out_size, void *pvParameters, size_t pv_param_size)
