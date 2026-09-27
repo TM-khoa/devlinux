@@ -91,7 +91,7 @@ int main()
                     child_pids[i], orders[i].id, WEXITSTATUS(status));
         } else if (WIFEXITED(status)) {
             printf("[MANAGER] waitpid(%d) — order %d#: exit code=%d → FAILED\n", 
-                    child_pids[i], orders[i].id, WTERMSIG(status));
+                    child_pids[i], orders[i].id, WEXITSTATUS(status));
             order_fail++;
         }
         else {

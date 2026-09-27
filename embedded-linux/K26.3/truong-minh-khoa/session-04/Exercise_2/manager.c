@@ -17,13 +17,13 @@ int main()
 [MANAGER] PID: %d \n\
 Enter Student ID ('quit' to exit)\n\
 ";
-    pid_t child_pids = {0};
+    pid_t pid;
     char student_id[10]= {0};
     printf(banner, getpid());
     while(1) {
         printf("---------------------------------------------\n");
         printf("Student ID: ");
-        if(scanf("%s", student_id) != 1) {
+        if(scanf("%9s", student_id) != 1) {
             printf("Error: Invalid input argument\n");
             return 1;
         }
@@ -31,8 +31,9 @@ Enter Student ID ('quit' to exit)\n\
             printf("[MANAGER] Exiting. Goodbye!");
             break;
         }
+        fflush(stdin);
         fflush(stdout);
-        pid_t pid = fork();
+        pid = fork();
         if(pid < 0){
             perror("fork fail");
             exit(1);
@@ -49,10 +50,10 @@ Enter Student ID ('quit' to exit)\n\
         }
         int status;
         printf("[MANAGER] Waiting for child (waitpid)...\n");
-        pid_t cpid = waitpid(child_pids, &status, 0); 
+        pid_t cpid = waitpid(pid, &status, 0); 
         if (cpid > 0) {
             if (WIFEXITED(status)) {
-                printf("[MANAGER] Child (PID %d) exited. code=%d → %s\n", cpid, WEXITSTATUS(status), status == 0 ? "Found" : "Not found");
+                printf("[MANAGER] Child (PID %d) exited. code=%d → %s\n", cpid, WEXITSTATUS(status), WEXITSTATUS(status) == 0 ? "Found" : "Not found");
             } else if (WIFSIGNALED(status)) {
                 printf("[MANAGER] waitpid(%d) exit code=%d → FAILED\n", 
                         cpid, WTERMSIG(status));
