@@ -6,6 +6,7 @@
 
 #define QUEUE_MAX_SIZE 5
 #define FILE_NAME_LENGTH 60
+#define SLEEP_DELAY 1
 
 typedef struct {
     int  doc_id;
@@ -66,18 +67,19 @@ int main()
     int result;
     printf("%s", banner);
     pthread_mutex_init(&q_lock, NULL);
+
+    result = pthread_create(&thread_printer, NULL, printer, NULL);
+    if (result != 0) {
+        perror("Thread creation failed");
+        return 1;
+    }
+
     for(int i = 0; i < THREAD_PRODUCER_NUM;i++) {
         result = pthread_create(&thread_producer[i], NULL, producer, (void*)&thread_id[i]);
         if (result != 0) {
             perror("Thread creation failed");
             return 1;
         }
-    }
-
-    result = pthread_create(&thread_printer, NULL, printer, NULL);
-    if (result != 0) {
-        perror("Thread creation failed");
-        return 1;
     }
 
     for(int i = 0; i < THREAD_PRODUCER_NUM;i++) {
@@ -113,15 +115,9 @@ void* producer(void *arg)
         pthread_mutex_lock(&q_lock);
         Document doc = doc_list[i + (3 * thread_id)];
         while (count == QUEUE_MAX_SIZE) {
-            printf("Queue full, unlock mutex\n");
-            pthread_mutex_unlock(&q_lock);
-            sleep(5);
             pthread_cond_wait(&not_full, &q_lock);
         }
-        if(enqueue(doc) != 0){
-            printf("Error: Queue full - waiting...\n");
-            pthread_mutex_unlock(&q_lock);
-        }
+        enqueue(doc);
         doc_submitted++;
         printf("[Producer %d] Submitting:%s (%d pages) - queue: %d/%d\n", 
                 thread_id, 
@@ -134,7 +130,6 @@ void* producer(void *arg)
         pthread_cond_signal(&not_empty);
         pthread_mutex_unlock(&q_lock);
     }
-    sleep(1);
     return NULL;
 }
 
@@ -145,9 +140,6 @@ void* printer(void *arg)
     while(1) {
         pthread_mutex_lock(&q_lock);
         while (count == 0 && !all_sent) {
-            pthread_mutex_unlock(&q_lock);
-            printf("Printer: Queue empty, unlock mutex\n");
-            sleep(5);
             pthread_cond_wait(&not_empty, &q_lock);
         }
 
@@ -169,7 +161,7 @@ void* printer(void *arg)
         }
         pthread_cond_signal(&not_full);
         pthread_mutex_unlock(&q_lock);
-        sleep(1);
+        sleep(SLEEP_DELAY);
     }
     return NULL;
 }

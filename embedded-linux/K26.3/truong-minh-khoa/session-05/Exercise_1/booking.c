@@ -4,6 +4,7 @@
 
 #define THREAD_NUM 5
 #define TOTAL_SEATS 10
+#define SLEEP_DELAY 1
 
 typedef struct {
     int  agent_id;
@@ -63,15 +64,16 @@ int main() {
 
 void* book_ticket(void *arg)
 {
+    BookingRequest *request = NULL;
     if(arg != NULL) {
-        BookingRequest *request = (BookingRequest*)arg;
+        request = (BookingRequest*)arg;
     }
     int wanted = request->seats_wanted;
     char *customer = request->customer;
     int id = request->agent_id;
 
     printf("[Agent %d | TID %lu...] Booking %d seats for %s...\n", id, (long)pthread_self(), wanted, customer);
-    sleep(1);
+    sleep(SLEEP_DELAY);
     pthread_mutex_lock(&seat_lock);
     /* Due to seats_available is a shared resource, the check condition and then deduct seats must be placed in the mutex lock, or else the race condition between threads will corrupt the value of seats_available */
     if(seats_available >= wanted) {

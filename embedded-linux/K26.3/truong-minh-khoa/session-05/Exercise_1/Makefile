@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS=-Wall -Wextra -std=c99 -Iinclude -g -pthread
 
-all: booking
+all: main
 
 run:
 	./booking
