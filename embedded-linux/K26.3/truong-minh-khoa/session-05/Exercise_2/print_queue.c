@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 
 #define QUEUE_MAX_SIZE 5
 #define FILE_NAME_LENGTH 60
@@ -56,8 +57,8 @@ Document doc_list[] = {
 void* producer(void *arg);
 void* printer(void *arg);
 void print_summary();
-int dequeue(Document *doc);
-int enqueue(Document doc);
+void dequeue(Document *doc);
+void enqueue(Document doc);
 
 
 int main()
@@ -67,6 +68,8 @@ int main()
     int result;
     printf("%s", banner);
     pthread_mutex_init(&q_lock, NULL);
+    pthread_cond_init(&not_full, NULL);
+    pthread_cond_init(&not_empty, NULL);
 
     result = pthread_create(&thread_printer, NULL, printer, NULL);
     if (result != 0) {
@@ -95,6 +98,8 @@ int main()
     if(err != 0) {
         printf("Error: Fail to join the thread\n");
     }
+    pthread_cond_destroy(&not_full);
+    pthread_cond_destroy(&not_empty);
     pthread_mutex_destroy(&q_lock);
     print_summary();
     return 0;
@@ -104,6 +109,7 @@ int main()
 void* producer(void *arg)
 {
     int thread_id = 0;
+    int err = 0;
     if(arg != NULL) {
         thread_id = *(int *)arg;
     }
@@ -112,7 +118,12 @@ void* producer(void *arg)
     }
 
     for(int i = 0; i < 3; i++) {
-        pthread_mutex_lock(&q_lock);
+        err = pthread_mutex_lock(&q_lock);
+        if(err != 0) {
+            printf("Error in %s: mutex lock failed", __func__);
+            fprintf(stderr, "pthread_mutex_lock failed: %s\n", strerror(err));
+
+        }
         Document doc = doc_list[i + (3 * thread_id)];
         while (count == QUEUE_MAX_SIZE) {
             pthread_cond_wait(&not_full, &q_lock);
@@ -128,7 +139,10 @@ void* producer(void *arg)
 
         /* Signal to wake printer up */
         pthread_cond_signal(&not_empty);
-        pthread_mutex_unlock(&q_lock);
+        err = pthread_mutex_unlock(&q_lock);
+        if(err != 0) {
+            fprintf(stderr, "pthread_mutex_unlock failed: %s\n", strerror(err));
+        }
     }
     return NULL;
 }
@@ -137,16 +151,26 @@ void* printer(void *arg)
 {
     (void)arg;
     Document doc;
+    int err = 0;
     while(1) {
-        pthread_mutex_lock(&q_lock);
+        err = pthread_mutex_lock(&q_lock);
+        if(err != 0) {
+            printf("Error in %s: mutex lock failed", __func__);
+            fprintf(stderr, "pthread_mutex_lock failed: %s\n", strerror(err));
+
+        }
         while (count == 0 && !all_sent) {
             pthread_cond_wait(&not_empty, &q_lock);
         }
-
-        if(dequeue(&doc) != 0){
-            printf("Error: Queue full - waiting...\n");
-            pthread_mutex_unlock(&q_lock);
+        if (count == 0 && all_sent){
+            printf("[Printer]    All documents printed. Exiting.\n");
+            err = pthread_mutex_unlock(&q_lock);
+            if(err != 0) {
+                fprintf(stderr, "pthread_mutex_unlock failed: %s\n", strerror(err));
+            }
+            break;
         }
+        dequeue(&doc);
         doc_printed++;
         total_pages += doc.pages;
         printf("[Printer] Printing: %s, (%d pages) - queue: %d/%d\n", 
@@ -154,13 +178,11 @@ void* printer(void *arg)
                 doc.pages,
                 count,
                 QUEUE_MAX_SIZE);
-        if (count == 0 && all_sent){
-            printf("[Printer]    All documents printed. Exiting.\n");
-            pthread_mutex_unlock(&q_lock);
-            break;
-        }
         pthread_cond_signal(&not_full);
-        pthread_mutex_unlock(&q_lock);
+        err = pthread_mutex_unlock(&q_lock);
+        if(err != 0) {
+            fprintf(stderr, "pthread_mutex_unlock failed: %s\n", strerror(err));
+        }
         sleep(SLEEP_DELAY);
     }
     return NULL;
@@ -178,22 +200,17 @@ void print_summary()
 
 }
 
-bool isFull() { return (tail == QUEUE_MAX_SIZE); }
-bool isEmpty() { return (head == tail - 1); }
-
-int enqueue(Document doc)
+void enqueue(Document doc)
 {
     queue[tail] = doc;
     tail = (tail + 1)%QUEUE_MAX_SIZE;
     count++;
-    return 0;
 }
 
-int dequeue(Document *doc)
+void dequeue(Document *doc)
 {
     *doc = queue[head];
     head = (head + 1)%QUEUE_MAX_SIZE;
     count--;
-    return 0;
 }
 

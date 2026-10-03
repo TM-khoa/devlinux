@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 #define THREAD_NUM 5
 #define TOTAL_SEATS 10
@@ -28,9 +29,6 @@ int fail_booking = 0;
 void* book_ticket(void *arg);
 void print_summary();
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <pthread.h>
 
 int main() {
     printf("==============================================\n");
@@ -78,7 +76,7 @@ void* book_ticket(void *arg)
     /* Due to seats_available is a shared resource, the check condition and then deduct seats must be placed in the mutex lock, or else the race condition between threads will corrupt the value of seats_available */
     if(seats_available >= wanted) {
         seats_available -= wanted;
-        seat_sold = TOTAL_SEATS - seats_available;
+        seat_sold += wanted;
         printf("[Agent %d] CONFIRM: %d seats for %s. Remaining:%d\n", id,  wanted, customer, seats_available);
     }
     else {
