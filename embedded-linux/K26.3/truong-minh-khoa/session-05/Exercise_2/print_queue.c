@@ -196,3 +196,4 @@ int dequeue(Document *doc)
     count--;
     return 0;
 }
+
