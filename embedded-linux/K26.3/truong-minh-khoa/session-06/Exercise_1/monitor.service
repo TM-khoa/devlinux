@@ -1,0 +1,15 @@
+[Unit]
+Description=Monitor Service - An exercise of Devlinux Linux course
+After=network.target
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=5
+ExecStart=/usr/local/bin/monitor
+
+[Install]
+WantedBy=multi-user.target
+
