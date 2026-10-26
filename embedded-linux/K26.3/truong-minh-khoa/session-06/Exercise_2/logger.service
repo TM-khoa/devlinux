@@ -1,0 +1,10 @@
+[Unit]
+Description=Exercise 2 Devlinux systemd logger service
+
+[Service]
+ExecStart=/usr/local/bin/logger
+Restart=no
+
+[Install]
+WantedBy=multi-user.target
+

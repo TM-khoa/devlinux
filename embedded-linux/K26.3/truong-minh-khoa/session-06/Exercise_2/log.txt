@@ -1,0 +1,116 @@
+=== 1. Full service log ===
+Oct 25 23:14:30 kolaboris-vps-amd systemd[1]: Started logger.service - Exercise 2 Devlinux systemd logger service.
+Oct 25 23:14:30 kolaboris-vps-amd logger[432087]: Service running normally, cycle 1
+Oct 25 23:14:30 kolaboris-vps-amd logger[432087]: Memory usage high: 93%
+Oct 25 23:14:30 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 1
+Oct 25 23:14:32 kolaboris-vps-amd logger[432087]: Service running normally, cycle 2
+Oct 25 23:14:32 kolaboris-vps-amd logger[432087]: Memory usage high: 81%
+Oct 25 23:14:32 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 2
+Oct 25 23:14:34 kolaboris-vps-amd logger[432087]: Service running normally, cycle 3
+Oct 25 23:14:34 kolaboris-vps-amd logger[432087]: Memory usage high: 92%
+Oct 25 23:14:34 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 3
+Oct 25 23:14:36 kolaboris-vps-amd logger[432087]: Service running normally, cycle 4
+Oct 25 23:14:36 kolaboris-vps-amd logger[432087]: Memory usage high: 90%
+Oct 25 23:14:36 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 4
+Oct 25 23:14:38 kolaboris-vps-amd logger[432087]: Service running normally, cycle 5
+Oct 25 23:14:38 kolaboris-vps-amd logger[432087]: Memory usage high: 88%
+Oct 25 23:14:38 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 5
+Oct 25 23:14:40 kolaboris-vps-amd logger[432087]: Service running normally, cycle 6
+Oct 25 23:14:40 kolaboris-vps-amd logger[432087]: Memory usage high: 90%
+Oct 25 23:14:40 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 6
+Oct 25 23:14:42 kolaboris-vps-amd logger[432087]: Service running normally, cycle 7
+Oct 25 23:14:42 kolaboris-vps-amd logger[432087]: Memory usage high: 81%
+Oct 25 23:14:42 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 7
+Oct 25 23:14:44 kolaboris-vps-amd logger[432087]: Service running normally, cycle 8
+Oct 25 23:14:44 kolaboris-vps-amd logger[432087]: Memory usage high: 92%
+Oct 25 23:14:44 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 8
+Oct 25 23:14:46 kolaboris-vps-amd logger[432087]: Service running normally, cycle 9
+Oct 25 23:14:46 kolaboris-vps-amd logger[432087]: Memory usage high: 89%
+Oct 25 23:14:46 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 9
+Oct 25 23:14:48 kolaboris-vps-amd logger[432087]: Service running normally, cycle 10
+Oct 25 23:14:48 kolaboris-vps-amd logger[432087]: Memory usage high: 81%
+Oct 25 23:14:48 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 10
+Oct 25 23:14:50 kolaboris-vps-amd logger[432087]: Service running normally, cycle 11
+Oct 25 23:14:50 kolaboris-vps-amd logger[432087]: Memory usage high: 82%
+Oct 25 23:14:50 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 11
+Oct 25 23:14:52 kolaboris-vps-amd logger[432087]: Service running normally, cycle 12
+Oct 25 23:14:52 kolaboris-vps-amd logger[432087]: Memory usage high: 87%
+Oct 25 23:14:52 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 12
+Oct 25 23:14:54 kolaboris-vps-amd logger[432087]: Service running normally, cycle 13
+Oct 25 23:14:54 kolaboris-vps-amd logger[432087]: Memory usage high: 85%
+Oct 25 23:14:54 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 13
+Oct 25 23:14:56 kolaboris-vps-amd logger[432087]: Service running normally, cycle 14
+Oct 25 23:14:56 kolaboris-vps-amd logger[432087]: Memory usage high: 84%
+Oct 25 23:14:56 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 14
+Oct 25 23:14:58 kolaboris-vps-amd logger[432087]: Service running normally, cycle 15
+Oct 25 23:14:58 kolaboris-vps-amd logger[432087]: Memory usage high: 88%
+Oct 25 23:14:58 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 15
+Oct 25 23:15:01 kolaboris-vps-amd systemd[1]: logger.service: Main process exited, code=dumped, status=6/ABRT
+Oct 25 23:15:01 kolaboris-vps-amd systemd[1]: logger.service: Failed with result 'core-dump'.
+=== 2. Warning level and above ===
+Oct 25 23:14:30 kolaboris-vps-amd logger[432087]: Memory usage high: 93%
+Oct 25 23:14:30 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 1
+Oct 25 23:14:32 kolaboris-vps-amd logger[432087]: Memory usage high: 81%
+Oct 25 23:14:32 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 2
+Oct 25 23:14:34 kolaboris-vps-amd logger[432087]: Memory usage high: 92%
+Oct 25 23:14:34 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 3
+Oct 25 23:14:36 kolaboris-vps-amd logger[432087]: Memory usage high: 90%
+Oct 25 23:14:36 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 4
+Oct 25 23:14:38 kolaboris-vps-amd logger[432087]: Memory usage high: 88%
+Oct 25 23:14:38 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 5
+Oct 25 23:14:40 kolaboris-vps-amd logger[432087]: Memory usage high: 90%
+Oct 25 23:14:40 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 6
+Oct 25 23:14:42 kolaboris-vps-amd logger[432087]: Memory usage high: 81%
+Oct 25 23:14:42 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 7
+Oct 25 23:14:44 kolaboris-vps-amd logger[432087]: Memory usage high: 92%
+Oct 25 23:14:44 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 8
+Oct 25 23:14:46 kolaboris-vps-amd logger[432087]: Memory usage high: 89%
+Oct 25 23:14:46 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 9
+Oct 25 23:14:48 kolaboris-vps-amd logger[432087]: Memory usage high: 81%
+Oct 25 23:14:48 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 10
+Oct 25 23:14:50 kolaboris-vps-amd logger[432087]: Memory usage high: 82%
+Oct 25 23:14:50 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 11
+Oct 25 23:14:52 kolaboris-vps-amd logger[432087]: Memory usage high: 87%
+Oct 25 23:14:52 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 12
+Oct 25 23:14:54 kolaboris-vps-amd logger[432087]: Memory usage high: 85%
+Oct 25 23:14:54 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 13
+Oct 25 23:14:56 kolaboris-vps-amd logger[432087]: Memory usage high: 84%
+Oct 25 23:14:56 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 14
+Oct 25 23:14:58 kolaboris-vps-amd logger[432087]: Memory usage high: 88%
+Oct 25 23:14:58 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 15
+Oct 25 23:15:01 kolaboris-vps-amd systemd[1]: logger.service: Main process exited, code=dumped, status=6/ABRT
+Oct 25 23:15:01 kolaboris-vps-amd systemd[1]: logger.service: Failed with result 'core-dump'.
+=== 3. Error level and above ===
+Oct 25 23:14:30 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 1
+Oct 25 23:14:32 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 2
+Oct 25 23:14:34 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 3
+Oct 25 23:14:36 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 4
+Oct 25 23:14:38 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 5
+Oct 25 23:14:40 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 6
+Oct 25 23:14:42 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 7
+Oct 25 23:14:44 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 8
+Oct 25 23:14:46 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 9
+Oct 25 23:14:48 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 10
+Oct 25 23:14:50 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 11
+Oct 25 23:14:52 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 12
+Oct 25 23:14:54 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 13
+Oct 25 23:14:56 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 14
+Oct 25 23:14:58 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 15
+=== 4. Log from the last 1 minute ===
+-- No entries --
+=== 5. Crash point ===
+Oct 25 23:14:30 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 1
+Oct 25 23:14:32 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 2
+Oct 25 23:14:34 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 3
+Oct 25 23:14:36 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 4
+Oct 25 23:14:38 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 5
+Oct 25 23:14:40 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 6
+Oct 25 23:14:42 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 7
+Oct 25 23:14:44 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 8
+Oct 25 23:14:46 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 9
+Oct 25 23:14:48 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 10
+Oct 25 23:14:50 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 11
+Oct 25 23:14:52 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 12
+Oct 25 23:14:54 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 13
+Oct 25 23:14:56 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 14
+Oct 25 23:14:58 kolaboris-vps-amd logger[432087]: Failed to connect to database, retry 15
